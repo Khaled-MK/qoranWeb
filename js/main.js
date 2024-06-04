@@ -36,8 +36,14 @@ window.addEventListener("load", async () => {
                const fwdi = document.createElement("i");
                const stopi = document.createElement("i");
                const audio = document.createElement("audio");
+               const timeSpan = document.createElement("span");
+               const progSpan = document.createElement("span");
+               const curTimeSpan = document.createElement("span");
+               const fullTimeSpan = document.createElement("span");
+               let time = "0:00";
+               let curTime = document.createTextNode(time);
 
-               lecDiv.classList.add("my-4", "mx-7", "flex", "items-center", "gap-x-4");
+               lecDiv.classList.add("my-4", "mx-7", "px-4", "flex", "items-center", "justify-center", "gap-x-3", "text-[16px]");
                waveDiv.classList.add("flex-1");
                ctrlDiv.classList.add("flex", "gap-2", "justify-center");
                backBtn.classList.add("controls", "bg-green-600", "hover:bg-green-800", "text-white", "px-5", "py-2", "text-xl", "rounded-lg", "flex", "justify-center", "items-center");
@@ -48,8 +54,13 @@ window.addEventListener("load", async () => {
                playi.classList.add("fa", "fa-play", "rot");
                fwdi.classList.add("fa", "fa-step-backward");
                stopi.classList.add("fa", "fa-stop");
+               timeSpan.classList.add("w-8/12", "relative", "rounded-full", "h-[6px]", "bg-gray-300");
+               progSpan.classList.add("absolute", "top-0", "right-0", "rounded-full", "h-[6px]", "bg-green-600");
 
-               lecDiv.append(waveDiv);
+               curTimeSpan.textContent = "0:00";
+               timeSpan.append(progSpan);
+               lecDiv.append(curTimeSpan, timeSpan, fullTimeSpan);
+
                backBtn.append(backi);
                playBtn.append(playi);
                fwdBtn.append(fwdi);
@@ -65,13 +76,14 @@ window.addEventListener("load", async () => {
 
                audio.src = `https://download.quranicaudio.com/qdc/hani_ar_rifai/murattal/${bigDiv.id}.mp3`;
                audio.classList.add("audio");
-               // audio.setAttribute("controls", "");
+               audio.setAttribute("controls", "");
                // audio.setAttribute("controller", "");
 
                // console.log(audio.childNodes);
 
                audio.addEventListener("canplay", () => {
                   playBtn.classList.add("bg-green-600");
+                  fullTimeSpan.append(document.createTextNode(formatTime(audio.duration)));
                });
                backBtn.addEventListener("click", () => {});
                fwdBtn.addEventListener("click", () => {
@@ -80,7 +92,7 @@ window.addEventListener("load", async () => {
                playBtn.addEventListener("click", () => {
                   let audios = document.querySelectorAll(".audio");
                   let playsbtn = document.querySelectorAll(".fa-pause");
-                  console.log(playBtn);
+
                   for (let i = 0; i < audios.length; i++) {
                      audios[i].pause();
                   }
@@ -100,11 +112,27 @@ window.addEventListener("load", async () => {
                      playsbtn[i].classList.remove("fa-pause");
                   }
                });
-               stopBtn.addEventListener("click", () => {});
+
+               stopBtn.addEventListener("click", () => {
+                  playi.classList.remove("fa-pause");
+                  playi.classList.add("fa-play");
+                  audio.pause();
+                  audio.currentTime = 0;
+               });
+               audio.addEventListener("timeupdate", async () => {
+                  progSpan.style.width = `${(audio.currentTime * 100) / audio.duration}%`;
+                  curTimeSpan.textContent = formatTime(audio.currentTime);
+               });
             });
          });
       });
 });
+
+function formatTime(seconds) {
+   const minutes = Math.floor(seconds / 60);
+   const secs = Math.floor(seconds % 60);
+   return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+}
 
 /*
     <div class="bg-white rounded-xl shadow-md px-3 pt-6 pb-2 gap-y-10 text-xl">
