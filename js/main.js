@@ -1,0 +1,191 @@
+let surats = document.getElementById("surats");
+let audio = document.getElementById("audio");
+let lien = document.getElementById("lien");
+let lecteur = document.getElementById("lecteur");
+const glob = document.getElementById("global");
+
+window.addEventListener("load", async () => {
+   await fetch(`https://api.quran.com/api/v4/chapters`, {
+      method: "GET",
+      headers: {
+         "Content-Type": "application/json",
+      },
+   })
+      .then((response) => {
+         if (!response.ok) {
+            throw new Error(`Erreur HTTP! Statut : ${response.status}`);
+         }
+         return response.json();
+      })
+      .then((data) => {
+         srtDisplay(data.chapters);
+         let lecBtns = document.querySelectorAll(".btn");
+         lecBtns.forEach((btn) => {
+            btn.addEventListener("click", async () => {
+               let bigDiv = btn.parentElement.parentElement;
+
+               const lecDiv = document.createElement("div");
+               const waveDiv = document.createElement("div");
+               const ctrlDiv = document.createElement("div");
+               const backBtn = document.createElement("button");
+               const playBtn = document.createElement("button");
+               const fwdBtn = document.createElement("button");
+               const stopBtn = document.createElement("button");
+               const backi = document.createElement("i");
+               const playi = document.createElement("i");
+               const fwdi = document.createElement("i");
+               const stopi = document.createElement("i");
+               const audio = document.createElement("audio");
+
+               lecDiv.classList.add("my-4", "mx-7", "flex", "items-center", "gap-x-4");
+               waveDiv.classList.add("flex-1");
+               ctrlDiv.classList.add("flex", "gap-2", "justify-center");
+               backBtn.classList.add("controls", "bg-green-600", "hover:bg-green-800", "text-white", "px-5", "py-2", "text-xl", "rounded-lg", "flex", "justify-center", "items-center");
+               playBtn.classList.add("controls", "bg-green-100", "hover:bg-green-800", "text-white", "px-5", "py-2", "text-xl", "rounded-lg", "flex", "justify-center", "items-center", "gap-2");
+               fwdBtn.classList.add("controls", "bg-green-600", "hover:bg-green-800", "text-white", "px-5", "py-2", "text-xl", "rounded-lg", "flex", "justify-center", "items-center");
+               stopBtn.classList.add("controls", "bg-green-600", "hover:bg-green-800", "text-white", "px-5", "py-2", "text-xl", "rounded-lg", "flex", "justify-center", "items-center");
+               backi.classList.add("fa", "fa-step-forward");
+               playi.classList.add("fa", "fa-play", "rot");
+               fwdi.classList.add("fa", "fa-step-backward");
+               stopi.classList.add("fa", "fa-stop");
+
+               lecDiv.append(waveDiv);
+               backBtn.append(backi);
+               playBtn.append(playi);
+               fwdBtn.append(fwdi);
+               stopBtn.append(stopi);
+               ctrlDiv.append(backBtn, playBtn, fwdBtn, stopBtn);
+               waveDiv.append(audio);
+               bigDiv.append(lecDiv, ctrlDiv);
+
+               bigDiv.classList.add("col-span-2", "gap-y-10");
+               bigDiv.children[3].remove();
+               bigDiv.children[2].remove();
+               bigDiv.children[1].remove();
+
+               audio.src = `https://download.quranicaudio.com/qdc/hani_ar_rifai/murattal/${bigDiv.id}.mp3`;
+               audio.classList.add("audio");
+               // audio.setAttribute("controls", "");
+               // audio.setAttribute("controller", "");
+
+               // console.log(audio.childNodes);
+
+               audio.addEventListener("canplay", () => {
+                  playBtn.classList.add("bg-green-600");
+               });
+               backBtn.addEventListener("click", () => {});
+               fwdBtn.addEventListener("click", () => {
+                  console.log(audio.buffered());
+               });
+               playBtn.addEventListener("click", () => {
+                  let audios = document.querySelectorAll(".audio");
+                  let playsbtn = document.querySelectorAll(".fa-pause");
+                  console.log(playBtn);
+                  for (let i = 0; i < audios.length; i++) {
+                     audios[i].pause();
+                  }
+
+                  // console.log(a);
+                  if (playi.classList.contains("fa-play")) {
+                     playi.classList.add("fa-pause");
+                     playi.classList.remove("fa-play");
+                     audio.play();
+                  } else {
+                     playi.classList.remove("fa-pause");
+                     playi.classList.add("fa-play");
+                     audio.pause();
+                  }
+                  for (let i = 0; i < playsbtn.length; i++) {
+                     playsbtn[i].classList.add("fa-play");
+                     playsbtn[i].classList.remove("fa-pause");
+                  }
+               });
+               stopBtn.addEventListener("click", () => {});
+            });
+         });
+      });
+});
+
+/*
+    <div class="bg-white rounded-xl shadow-md px-3 pt-6 pb-2 gap-y-10 text-xl">
+               <div class="my-3 text-center font-semibold">
+                  <h2 class=" text-2xl">الفاتحة</h2>
+                  <h2 class=" text-xl">(El Fatiah)</h2>
+               </div>
+               <div class="flex justify-between">
+                  <p>أيات</p>
+                  <p class="font-bold">7</p>
+                  <p>Verses</p>
+               </div>
+               <div class="flex justify-between">
+                  <p>مكية</p>
+                  <p>Makkia</p>
+               </div>
+               <div class="my-4 w-full flex justify-center">
+                  <button class="bn632-hover bn25 flex justify-center py-1 px-14 text-xl text-white cursor-pointer select-none">قرائة</button>
+               </div>
+            </div>
+*/
+
+function srtDisplay(data) {
+   data.forEach((soura) => {
+      const bigDiv = document.createElement("div");
+      const titreDiv = document.createElement("div");
+      const versesDiv = document.createElement("div");
+      const placeDiv = document.createElement("div");
+      const btnDiv = document.createElement("div");
+      const arH = document.createElement("h2");
+      const frH = document.createElement("h3");
+      const vPara = document.createElement("p");
+      const vArPara = document.createElement("p");
+      const vFrPara = document.createElement("p");
+      const arPlacePara = document.createElement("p");
+      const frPlacePara = document.createElement("p");
+      const lecBtn = document.createElement("button");
+      const arNom = document.createTextNode(soura.name_arabic);
+      const frNom = document.createTextNode(soura.name_simple);
+      const frVerses = document.createTextNode(`Verses`);
+      const arVerses = document.createTextNode("الآيات");
+      const verses = document.createTextNode(soura.verses_count);
+
+      // console.log(arPlace);
+      bigDiv.classList.add("bg-white", "rounded-xl", "shadow-md", "px-3", "pt-6", "pb-2", "gap-y-10", "text-xl");
+      titreDiv.classList.add("my-3", "text-center", "font-semibold");
+      arH.classList.add("text-2xl");
+      frH.classList.add("text-xl");
+      versesDiv.classList.add("flex", "justify-between");
+      placeDiv.classList.add("flex", "justify-between");
+      btnDiv.classList.add("my-4", "w-full", "flex", "justify-center");
+      lecBtn.classList.add("btn", "bn632-hover", "bn25", "flex", "justify-center", "py-1", "px-14", "text-xl", "text-white", "cursor-pointer", "select-none");
+      vPara.classList.add("font-bold");
+
+      arH.append(arNom);
+      frH.append(frNom);
+      vArPara.append(arVerses);
+      vFrPara.append(frVerses);
+      vPara.append(verses);
+
+      if (soura.revelation_place === "makkah") {
+         arPlacePara.append(document.createTextNode(`مكية`));
+         frPlacePara.append(document.createTextNode(`Makkia`));
+      } else if (soura.revelation_place === "madinah") {
+         arPlacePara.append(document.createTextNode(`مدنية`));
+         frPlacePara.append(document.createTextNode(`Madania`));
+      } else {
+         arPlacePara.append(document.createTextNode(`لايوجد`));
+         frPlacePara.append(document.createTextNode(`intouvable`));
+      }
+
+      lecBtn.append(document.createTextNode("قرائة"));
+
+      btnDiv.append(lecBtn);
+      placeDiv.append(arPlacePara, frPlacePara);
+      versesDiv.append(vArPara, vPara, vFrPara);
+      titreDiv.append(arH, frH);
+      bigDiv.append(titreDiv, versesDiv, placeDiv, btnDiv);
+
+      bigDiv.id = soura.id;
+
+      glob.append(bigDiv);
+   });
+}
