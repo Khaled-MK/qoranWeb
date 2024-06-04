@@ -1,8 +1,7 @@
-let surats = document.getElementById("surats");
-let audio = document.getElementById("audio");
-let lien = document.getElementById("lien");
-let lecteur = document.getElementById("lecteur");
 const glob = document.getElementById("global");
+const searchBar = document.getElementById("searchBar");
+let sourats;
+let sowar;
 
 window.addEventListener("load", async () => {
    await fetch(`https://api.quran.com/api/v4/chapters`, {
@@ -43,7 +42,7 @@ window.addEventListener("load", async () => {
                let time = "0:00";
                let curTime = document.createTextNode(time);
 
-               lecDiv.classList.add("my-4", "mx-7", "px-4", "flex", "items-center", "justify-center", "gap-x-3", "text-[16px]");
+               lecDiv.classList.add("my-4", "px-4", "flex", "items-center", "justify-center", "gap-x-3", "text-[16px]");
                waveDiv.classList.add("flex-1");
                ctrlDiv.classList.add("flex", "gap-2", "justify-center");
                backBtn.classList.add("controls", "bg-green-600", "hover:bg-green-800", "text-white", "px-5", "py-2", "text-xl", "rounded-lg", "flex", "justify-center", "items-center");
@@ -54,7 +53,7 @@ window.addEventListener("load", async () => {
                playi.classList.add("fa", "fa-play", "rot");
                fwdi.classList.add("fa", "fa-step-backward");
                stopi.classList.add("fa", "fa-stop");
-               timeSpan.classList.add("w-8/12", "relative", "rounded-full", "h-[6px]", "bg-gray-300", "cursor-pointer");
+               timeSpan.classList.add("w-full", "relative", "rounded-full", "h-[6px]", "bg-gray-300", "cursor-pointer");
                progSpan.classList.add("absolute", "top-0", "right-0", "rounded-full", "h-[6px]", "bg-green-600");
 
                curTimeSpan.textContent = "0:00";
@@ -127,14 +126,16 @@ window.addEventListener("load", async () => {
                audio.addEventListener("timeupdate", async () => {
                   progSpan.style.width = `${(audio.currentTime * 100) / audio.duration}%`;
                   curTimeSpan.textContent = formatTime(audio.currentTime);
-                  // console.log(audio.currentTime);
+                  if (audio.currentTime === audio.duration) {
+                     playi.classList.remove("fa-pause");
+                     playi.classList.add("fa-play");
+                  }
                });
                timeSpan.addEventListener("click", (e) => {
                   const spanWidth = e.target.getBoundingClientRect().width;
                   pxPosition = e.clientX - e.target.getBoundingClientRect().left;
                   position = (spanWidth - pxPosition) / spanWidth;
                   progSpan.style.width = `${position * 100}%`;
-
                   audio.currentTime = position * audio.duration;
                   // console.log(position * audio.duration);
                });
@@ -143,37 +144,15 @@ window.addEventListener("load", async () => {
       });
 });
 
-// 1 ==== 38.22
-// 0.8 ==== 0.2*60
-
 function formatTime(seconds) {
    const minutes = Math.floor(seconds / 60);
    const secs = Math.floor(seconds % 60);
    return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
 }
 
-/*
-    <div class="bg-white rounded-xl shadow-md px-3 pt-6 pb-2 gap-y-10 text-xl">
-               <div class="my-3 text-center font-semibold">
-                  <h2 class=" text-2xl">الفاتحة</h2>
-                  <h2 class=" text-xl">(El Fatiah)</h2>
-               </div>
-               <div class="flex justify-between">
-                  <p>أيات</p>
-                  <p class="font-bold">7</p>
-                  <p>Verses</p>
-               </div>
-               <div class="flex justify-between">
-                  <p>مكية</p>
-                  <p>Makkia</p>
-               </div>
-               <div class="my-4 w-full flex justify-center">
-                  <button class="bn632-hover bn25 flex justify-center py-1 px-14 text-xl text-white cursor-pointer select-none">قرائة</button>
-               </div>
-            </div>
-*/
-
 function srtDisplay(data) {
+   sourats = data;
+   sowar = data;
    data.forEach((soura) => {
       const bigDiv = document.createElement("div");
       const titreDiv = document.createElement("div");
@@ -194,11 +173,10 @@ function srtDisplay(data) {
       const arVerses = document.createTextNode("الآيات");
       const verses = document.createTextNode(soura.verses_count);
 
-      // console.log(arPlace);
       bigDiv.classList.add("bg-white", "rounded-xl", "shadow-md", "px-3", "pt-6", "pb-2", "gap-y-10", "text-xl");
       titreDiv.classList.add("my-3", "text-center", "font-semibold");
-      arH.classList.add("text-2xl");
-      frH.classList.add("text-xl");
+      arH.classList.add("arTitre", "text-2xl");
+      frH.classList.add("frTitre", "text-xl");
       versesDiv.classList.add("flex", "justify-between");
       placeDiv.classList.add("flex", "justify-between");
       btnDiv.classList.add("my-4", "w-full", "flex", "justify-center");
@@ -235,3 +213,28 @@ function srtDisplay(data) {
       glob.append(bigDiv);
    });
 }
+
+searchBar.addEventListener("keyup", (e) => {
+   console.log(sourats);
+   const input = searchBar.value;
+   let results = [];
+
+   if (input.length) {
+      results = sowar.filter((key) => {
+         return key.name_simple.toLowerCase().includes(input.toLowerCase()) || key.name_arabic.includes(input);
+      });
+
+      for (let i = glob.children.length - 1; i >= 0; i--) {
+         glob.children[i].remove();
+      }
+
+      if (results.length) {
+         srtDisplay(results);
+      } else {
+         srtDisplay(sourats);
+      }
+   } else {
+      srtDisplay(sourats);
+   }
+});
+//rest a trouver le moyen de garder sourats a 214 element
