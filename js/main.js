@@ -24,7 +24,6 @@ window.addEventListener("load", async () => {
                let bigDiv = btn.parentElement.parentElement;
 
                const lecDiv = document.createElement("div");
-               const waveDiv = document.createElement("div");
                const ctrlDiv = document.createElement("div");
                const backBtn = document.createElement("button");
                const playBtn = document.createElement("button");
@@ -39,11 +38,8 @@ window.addEventListener("load", async () => {
                const progSpan = document.createElement("span");
                const curTimeSpan = document.createElement("span");
                const fullTimeSpan = document.createElement("span");
-               let time = "0:00";
-               let curTime = document.createTextNode(time);
 
                lecDiv.classList.add("my-4", "px-4", "flex", "items-center", "justify-center", "gap-x-3", "text-[16px]");
-               waveDiv.classList.add("flex-1");
                ctrlDiv.classList.add("flex", "gap-2", "justify-center");
                backBtn.classList.add("controls", "bg-green-600", "hover:bg-green-800", "text-white", "px-5", "py-2", "text-xl", "rounded-lg", "flex", "justify-center", "items-center");
                playBtn.classList.add("controls", "bg-green-100", "hover:bg-green-800", "text-white", "px-5", "py-2", "text-xl", "rounded-lg", "flex", "justify-center", "items-center", "gap-2");
@@ -58,14 +54,13 @@ window.addEventListener("load", async () => {
 
                curTimeSpan.textContent = "0:00";
                timeSpan.append(progSpan);
-               lecDiv.append(curTimeSpan, timeSpan, fullTimeSpan);
+               lecDiv.append(curTimeSpan, timeSpan, fullTimeSpan, audio);
 
                backBtn.append(backi);
                playBtn.append(playi);
                fwdBtn.append(fwdi);
                stopBtn.append(stopi);
                ctrlDiv.append(backBtn, playBtn, fwdBtn, stopBtn);
-               waveDiv.append(audio);
                bigDiv.append(lecDiv, ctrlDiv);
 
                bigDiv.classList.add("col-span-2", "gap-y-10");
@@ -75,10 +70,7 @@ window.addEventListener("load", async () => {
 
                audio.src = `https://download.quranicaudio.com/qdc/hani_ar_rifai/murattal/${bigDiv.id}.mp3`;
                audio.classList.add("audio");
-               audio.setAttribute("controls", "");
-               // audio.setAttribute("controller", "");
-
-               // console.log(audio.childNodes);
+               // audio.setAttribute("controls", "");
 
                audio.addEventListener("loadedmetadata", () => {
                   fullTimeSpan.append(document.createTextNode(formatTime(audio.duration)));
@@ -93,15 +85,17 @@ window.addEventListener("load", async () => {
                fwdBtn.addEventListener("click", () => {
                   audio.currentTime = parseFloat(audio.currentTime) + 10;
                });
+
                playBtn.addEventListener("click", () => {
                   let audios = document.querySelectorAll(".audio");
+                  console.log(audios);
                   let playsbtn = document.querySelectorAll(".fa-pause");
 
                   for (let i = 0; i < audios.length; i++) {
                      audios[i].pause();
+                     console.log(audios[i]);
                   }
 
-                  // console.log(a);
                   if (playi.classList.contains("fa-play")) {
                      playi.classList.add("fa-pause");
                      playi.classList.remove("fa-play");
