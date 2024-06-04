@@ -54,7 +54,7 @@ window.addEventListener("load", async () => {
                playi.classList.add("fa", "fa-play", "rot");
                fwdi.classList.add("fa", "fa-step-backward");
                stopi.classList.add("fa", "fa-stop");
-               timeSpan.classList.add("w-8/12", "relative", "rounded-full", "h-[6px]", "bg-gray-300");
+               timeSpan.classList.add("w-8/12", "relative", "rounded-full", "h-[6px]", "bg-gray-300", "cursor-pointer");
                progSpan.classList.add("absolute", "top-0", "right-0", "rounded-full", "h-[6px]", "bg-green-600");
 
                curTimeSpan.textContent = "0:00";
@@ -81,13 +81,18 @@ window.addEventListener("load", async () => {
 
                // console.log(audio.childNodes);
 
-               audio.addEventListener("canplay", () => {
-                  playBtn.classList.add("bg-green-600");
+               audio.addEventListener("loadedmetadata", () => {
                   fullTimeSpan.append(document.createTextNode(formatTime(audio.duration)));
                });
-               backBtn.addEventListener("click", () => {});
+               audio.addEventListener("canplay", () => {
+                  playBtn.classList.add("bg-green-600");
+               });
+               backBtn.addEventListener("click", () => {
+                  audio.currentTime = parseFloat(audio.currentTime) - 10;
+                  // console.log(audio.duration);
+               });
                fwdBtn.addEventListener("click", () => {
-                  console.log(audio.buffered());
+                  audio.currentTime = parseFloat(audio.currentTime) + 10;
                });
                playBtn.addEventListener("click", () => {
                   let audios = document.querySelectorAll(".audio");
@@ -122,11 +127,24 @@ window.addEventListener("load", async () => {
                audio.addEventListener("timeupdate", async () => {
                   progSpan.style.width = `${(audio.currentTime * 100) / audio.duration}%`;
                   curTimeSpan.textContent = formatTime(audio.currentTime);
+                  // console.log(audio.currentTime);
+               });
+               timeSpan.addEventListener("click", (e) => {
+                  const spanWidth = e.target.getBoundingClientRect().width;
+                  pxPosition = e.clientX - e.target.getBoundingClientRect().left;
+                  position = (spanWidth - pxPosition) / spanWidth;
+                  progSpan.style.width = `${position * 100}%`;
+
+                  audio.currentTime = position * audio.duration;
+                  // console.log(position * audio.duration);
                });
             });
          });
       });
 });
+
+// 1 ==== 38.22
+// 0.8 ==== 0.2*60
 
 function formatTime(seconds) {
    const minutes = Math.floor(seconds / 60);
