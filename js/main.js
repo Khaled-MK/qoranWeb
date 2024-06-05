@@ -114,7 +114,6 @@ function lecture(lecBtns) {
    lecBtns.forEach((btn) => {
       btn.addEventListener("click", async () => {
          let bigDiv = btn.parentElement.parentElement;
-
          const lecDiv = document.createElement("div");
          const ctrlDiv = document.createElement("div");
          const backBtn = document.createElement("button");
@@ -130,7 +129,31 @@ function lecture(lecBtns) {
          const progSpan = document.createElement("span");
          const curTimeSpan = document.createElement("span");
          const fullTimeSpan = document.createElement("span");
+         const secDiv = document.createElement("div");
+         const switchDiv = document.createElement("div");
+         const reapSan = document.createElement("span");
+         const label = document.createElement("label");
+         const input = document.createElement("input");
+         const div = document.createElement("div");
+         const ptDiv = document.createElement("div");
 
+         switchDiv.append(reapSan, label);
+         div.append(ptDiv);
+         label.append(input, div);
+         reapSan.append(document.createTextNode("إعادة"));
+         secDiv.append(bigDiv.firstChild, switchDiv);
+         bigDiv.prepend(secDiv);
+
+         input.type = "checkbox";
+
+         ptDiv.classList.add("toggle-switch-handle");
+         div.classList.add("toggle-switch-background");
+         label.classList.add("toggle-switch", "mt-1");
+         switchDiv.classList.add("w-1/2", "flex", "justify-end", "px-2", "gap-x-2", "content-start");
+         secDiv.classList.add("my-3", "flex", "justify-between");
+         bigDiv.classList.add("col-span-2", "gap-y-10");
+         bigDiv.firstChild.firstChild.classList.remove("text-center", "my-3");
+         bigDiv.firstChild.firstChild.classList.add("w-1/2");
          lecDiv.classList.add("my-4", "px-4", "flex", "items-center", "justify-center", "gap-x-3", "text-[16px]");
          ctrlDiv.classList.add("flex", "gap-2", "justify-center");
          backBtn.classList.add("controls", "bg-green-600", "hover:bg-green-800", "text-white", "px-5", "py-2", "text-xl", "rounded-lg", "flex", "justify-center", "items-center");
@@ -155,14 +178,12 @@ function lecture(lecBtns) {
          ctrlDiv.append(backBtn, playBtn, fwdBtn, stopBtn);
          bigDiv.append(lecDiv, ctrlDiv);
 
-         bigDiv.classList.add("col-span-2", "gap-y-10");
          bigDiv.children[3].remove();
          bigDiv.children[2].remove();
          bigDiv.children[1].remove();
 
          audio.src = `https://download.quranicaudio.com/qdc/hani_ar_rifai/murattal/${bigDiv.id}.mp3`;
          audio.classList.add("audio");
-         // audio.setAttribute("controls", "");
 
          audio.addEventListener("loadedmetadata", () => {
             fullTimeSpan.append(document.createTextNode(formatTime(audio.duration)));
@@ -172,7 +193,6 @@ function lecture(lecBtns) {
          });
          backBtn.addEventListener("click", () => {
             audio.currentTime = parseFloat(audio.currentTime) - 10;
-            // console.log(audio.duration);
          });
          fwdBtn.addEventListener("click", () => {
             audio.currentTime = parseFloat(audio.currentTime) + 10;
@@ -180,20 +200,21 @@ function lecture(lecBtns) {
 
          playBtn.addEventListener("click", () => {
             let audios = document.querySelectorAll(".audio");
-            console.log(audios);
+
             let playsbtn = document.querySelectorAll(".fa-pause");
 
             for (let i = 0; i < audios.length; i++) {
                audios[i].pause();
-               console.log(audios[i]);
             }
 
-            if (playi.classList.contains("fa-play")) {
+            if (playi.classList.contains("fa-play") || playi.classList.contains("fa-rotate-left")) {
                playi.classList.add("fa-pause");
                playi.classList.remove("fa-play");
+               playi.classList.remove("fa-rotate-left");
                audio.play();
             } else {
                playi.classList.remove("fa-pause");
+               playi.classList.remove("fa-rotate-left");
                playi.classList.add("fa-play");
                audio.pause();
             }
@@ -205,25 +226,34 @@ function lecture(lecBtns) {
 
          stopBtn.addEventListener("click", () => {
             playi.classList.remove("fa-pause");
-            playi.classList.add("fa-play");
+            playi.classList.add("fa-rotate-left");
             audio.pause();
             audio.currentTime = 0;
          });
+
          audio.addEventListener("timeupdate", async () => {
             progSpan.style.width = `${(audio.currentTime * 100) / audio.duration}%`;
             curTimeSpan.textContent = formatTime(audio.currentTime);
-            if (audio.currentTime === audio.duration) {
+
+            if (audio.currentTime === audio.duration && input.checked) {
+               audio.currentTime = 0;
+               audio.play();
+            } else if (audio.currentTime === audio.duration && !input.checked) {
                playi.classList.remove("fa-pause");
-               playi.classList.add("fa-play");
+               playi.classList.add("fa-rotate-left");
             }
          });
+
          timeSpan.addEventListener("click", (e) => {
             const spanWidth = e.target.getBoundingClientRect().width;
             pxPosition = e.clientX - e.target.getBoundingClientRect().left;
             position = (spanWidth - pxPosition) / spanWidth;
             progSpan.style.width = `${position * 100}%`;
             audio.currentTime = position * audio.duration;
-            // console.log(position * audio.duration);
+         });
+         input.addEventListener("change", (e) => {
+            if (e.target.checked) {
+            }
          });
       });
    });
