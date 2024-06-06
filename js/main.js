@@ -32,7 +32,6 @@ searchBar.addEventListener("input", () => {
 
       if (arTitre.includes(input) || frTitre.includes(input.toLocaleLowerCase())) {
          soura.classList.remove("hidden");
-         console.log(soura);
       } else {
          soura.classList.add("hidden");
       }
@@ -125,31 +124,48 @@ function lecture(lecBtns) {
          const fwdi = document.createElement("i");
          const stopi = document.createElement("i");
          const audio = document.createElement("audio");
-         const timeSpan = document.createElement("span");
-         const progSpan = document.createElement("span");
+         const timeBar = document.createElement("input");
          const curTimeSpan = document.createElement("span");
          const fullTimeSpan = document.createElement("span");
          const secDiv = document.createElement("div");
-         const switchDiv = document.createElement("div");
+         const switchsDiv = document.createElement("div");
          const reapSan = document.createElement("span");
          const label = document.createElement("label");
          const input = document.createElement("input");
          const div = document.createElement("div");
          const ptDiv = document.createElement("div");
 
-         switchDiv.append(reapSan, label);
+         const suitSpan = document.createElement("span");
+         const suitLabel = document.createElement("label");
+         const suitInput = document.createElement("input");
+         const div2 = document.createElement("div");
+         const suitPtDiv = document.createElement("div");
+
+         const suitDiv = document.createElement("div");
+         const reapDiv = document.createElement("div");
+
+         div2.append(suitPtDiv);
+         suitLabel.append(suitInput, div2);
+         suitDiv.append(suitSpan, suitLabel);
+         reapDiv.append(reapSan, label);
+         switchsDiv.append(reapDiv, suitDiv);
          div.append(ptDiv);
          label.append(input, div);
          reapSan.append(document.createTextNode("إعادة"));
-         secDiv.append(bigDiv.firstChild, switchDiv);
+         suitSpan.append(document.createTextNode("التالي"));
+         secDiv.append(bigDiv.firstChild, switchsDiv);
          bigDiv.prepend(secDiv);
 
          input.type = "checkbox";
+         suitInput.type = "checkbox";
 
          ptDiv.classList.add("toggle-switch-handle");
+         suitPtDiv.classList.add("toggle-switch-handle");
          div.classList.add("toggle-switch-background");
+         div2.classList.add("toggle-switch-background");
          label.classList.add("toggle-switch", "mt-1");
-         switchDiv.classList.add("w-1/2", "flex", "justify-end", "px-2", "gap-x-2", "content-start");
+         suitLabel.classList.add("toggle-switch", "mt-1");
+         switchsDiv.classList.add("w-1/2", "flex", "flex-col", "items-end", "justify-end", "px-2", "gap-x-2", "content-start");
          secDiv.classList.add("my-3", "flex", "justify-between");
          bigDiv.classList.add("col-span-2", "gap-y-10");
          bigDiv.firstChild.firstChild.classList.remove("text-center", "my-3");
@@ -157,19 +173,20 @@ function lecture(lecBtns) {
          lecDiv.classList.add("my-4", "px-4", "flex", "items-center", "justify-center", "gap-x-3", "text-[16px]");
          ctrlDiv.classList.add("flex", "gap-2", "justify-center");
          backBtn.classList.add("controls", "bg-green-600", "hover:bg-green-800", "text-white", "px-5", "py-2", "text-xl", "rounded-lg", "flex", "justify-center", "items-center");
-         playBtn.classList.add("controls", "bg-green-100", "hover:bg-green-800", "text-white", "px-5", "py-2", "text-xl", "rounded-lg", "flex", "justify-center", "items-center", "gap-2");
+         playBtn.classList.add("controls", "play", "bg-green-100", "hover:bg-green-800", "text-white", "px-5", "py-2", "text-xl", "rounded-lg", "flex", "justify-center", "items-center", "gap-2");
          fwdBtn.classList.add("controls", "bg-green-600", "hover:bg-green-800", "text-white", "px-5", "py-2", "text-xl", "rounded-lg", "flex", "justify-center", "items-center");
          stopBtn.classList.add("controls", "bg-green-600", "hover:bg-green-800", "text-white", "px-5", "py-2", "text-xl", "rounded-lg", "flex", "justify-center", "items-center");
          backi.classList.add("fa", "fa-step-forward");
          playi.classList.add("fa", "fa-play", "rot");
          fwdi.classList.add("fa", "fa-step-backward");
          stopi.classList.add("fa", "fa-stop");
-         timeSpan.classList.add("w-full", "relative", "rounded-full", "h-[6px]", "bg-gray-300", "cursor-pointer");
-         progSpan.classList.add("absolute", "top-0", "right-0", "rounded-full", "h-[6px]", "bg-green-600");
+         timeBar.classList.add("time-bar");
+
+         timeBar.type = "range";
+         timeBar.value = 0;
 
          curTimeSpan.textContent = "0:00";
-         timeSpan.append(progSpan);
-         lecDiv.append(curTimeSpan, timeSpan, fullTimeSpan, audio);
+         lecDiv.append(curTimeSpan, timeBar, fullTimeSpan, audio);
 
          backBtn.append(backi);
          playBtn.append(playi);
@@ -200,7 +217,6 @@ function lecture(lecBtns) {
 
          playBtn.addEventListener("click", () => {
             let audios = document.querySelectorAll(".audio");
-
             let playsbtn = document.querySelectorAll(".fa-pause");
 
             for (let i = 0; i < audios.length; i++) {
@@ -232,25 +248,41 @@ function lecture(lecBtns) {
          });
 
          audio.addEventListener("timeupdate", async () => {
-            progSpan.style.width = `${(audio.currentTime * 100) / audio.duration}%`;
+            timeBar.value = (audio.currentTime * 100) / audio.duration;
             curTimeSpan.textContent = formatTime(audio.currentTime);
 
             if (audio.currentTime === audio.duration && input.checked) {
                audio.currentTime = 0;
                audio.play();
-            } else if (audio.currentTime === audio.duration && !input.checked) {
+            } else if (audio.currentTime === audio.duration && suitInput.checked) {
+               playi.classList.remove("fa-play");
+               playi.classList.remove("fa-pause");
+               playi.classList.add("fa-rotate-left");
+               bigDiv.nextSibling.lastChild.firstChild.click();
+               bigDiv.nextSibling.firstChild.lastChild.lastChild.lastChild.click();
+               let plays = document.querySelectorAll(".play");
+               plays[plays.length - 1].click();
+            } else if (audio.currentTime === audio.duration && !input.checked && !suitInput.checked) {
                playi.classList.remove("fa-pause");
                playi.classList.add("fa-rotate-left");
             }
          });
 
-         timeSpan.addEventListener("click", (e) => {
-            const spanWidth = e.target.getBoundingClientRect().width;
-            pxPosition = e.clientX - e.target.getBoundingClientRect().left;
-            position = (spanWidth - pxPosition) / spanWidth;
-            progSpan.style.width = `${position * 100}%`;
-            audio.currentTime = position * audio.duration;
+         input.addEventListener("click", () => {
+            if (suitInput.checked) {
+               suitInput.click();
+            }
          });
+         suitInput.addEventListener("click", () => {
+            if (input.checked) {
+               input.click();
+            }
+         });
+
+         timeBar.addEventListener("change", (e) => {
+            audio.currentTime = (timeBar.value * audio.duration) / 100;
+         });
+
          input.addEventListener("change", (e) => {
             if (e.target.checked) {
             }
@@ -258,11 +290,3 @@ function lecture(lecBtns) {
       });
    });
 }
-
-// let a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-// let b = a.filter((num) => {
-//    return num % 2 === 0;
-// });
-// console.log(b);
-// console.log(a);
