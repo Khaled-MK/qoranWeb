@@ -152,7 +152,7 @@ function lecture(lecBtns) {
          div.append(ptDiv);
          label.append(input, div);
          reapSan.append(document.createTextNode("إعادة"));
-         suitSpan.append(document.createTextNode("التالي"));
+         suitSpan.append(document.createTextNode("مواصلة"));
          secDiv.append(bigDiv.firstChild, switchsDiv);
          bigDiv.prepend(secDiv);
 
