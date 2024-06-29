@@ -30,7 +30,7 @@ window.addEventListener("load", async () => {
    }
    let showSowar = await showReponse.json();
    showVerses = showSowar.verses;
-   console.log(showVerses);
+   // console.log(showVerses);
 
    let sowarResponse = await fetch("https://api.quran.com/api/v4//chapters", {
       method: "GET",
@@ -105,6 +105,12 @@ const updateVolume = () => {
 const startRecording = () => {
    // console.log(verses);
    mic.classList.add("listening");
+   for (let i = resultDiv.children.length - 1; i >= 0; i--) {
+      resultDiv.children[i].remove();
+   }
+
+   resultDiv.classList.add("grid", "grid-cols-1", "text-ellipsis", "whitespace-pre", "overflow-x-hidden");
+   resultDiv.classList.remove("flex", "flex-wrap", "justify-center", "bg-white", "rounded-lg", "shadow-lg");
 
    navigator.mediaDevices
       .getUserMedia({ audio: true })
@@ -138,8 +144,17 @@ const stopRecording = () => {
    }
 };
 
-mic.addEventListener("mousedown", startRecording);
-mic.addEventListener("mouseup", stopRecording);
+mic.addEventListener("click", () => {
+   if (mic.lastElementChild.classList.contains("fa-microphone")) {
+      startRecording();
+      mic.lastElementChild.classList.remove("fa-microphone");
+      mic.lastElementChild.classList.add("fa-stop");
+   } else {
+      stopRecording();
+      mic.lastElementChild.classList.add("fa-microphone");
+      mic.lastElementChild.classList.remove("fa-stop");
+   }
+});
 
 resultDiv.addEventListener("click", async (e) => {
    if (e.target.classList.contains("rslt")) {
