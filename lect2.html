@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ar">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <title>Qoran App</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link rel="stylesheet" href="./css/main.css" />
+   </head>
+   <body class="">
+      <header class="w-full h-28 flex justify-center items-center z-10 gree">
+         <h1 class="text-white text-5xl font-bold">LOGO</h1>
+      </header>
+      <section class="bg-green-100 py-5 px-2">
+         <input id="searchBar" type="text" class="my-4 w-full h-10 bg-white rounded-lg shadow-md outline-none px-3" autocomplete="off" />
+         <div id="global" class="mx-auto grid grid-cols-2 grid-flow-row-dense gap-2">
+            <template>
+               <div class="bg-white rounded-xl shadow-md px-3 pb-10 pt-2 gap-y-10 text-xl self-start">
+                  <div class="mb-3 text-center font-semibold">
+                     <h2 class="text-2xl">الفاتحة</h2>
+                     <h2 class="text-xl">(El Fatiah)</h2>
+                  </div>
+                  <div class="flex justify-between text-lg">
+                     <p>أيات</p>
+                     <p class="font-bold">7</p>
+                     <p>Verses</p>
+                  </div>
+                  <div class="flex justify-between text-lg">
+                     <p>مكية</p>
+                     <p>Makkia</p>
+                  </div>
+               </div>
+               <div class="hidden"></div>
+            </template>
+         </div>
+      </section>
+
+      <script src="./js/main.js"></script>
+      <script src="./js/srtDisplay.js"></script>
+   </body>
+</html>
+
+<!-- https://www.youtube.com/watch?v=ftjZI4mLCoI -->
+<!-- api 
+https://api-docs.quran.com/docs/quran.com_versioned/chapter-reciter-audio-file -->

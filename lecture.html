@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <title>Qoran App</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link rel="stylesheet" href="./css/lecture.css" />
+   </head>
+   <body class="">
+      <header class="w-full h-28 flex justify-center items-center z-10 gree">
+         <h1 class="text-white text-5xl font-bold">LOGO</h1>
+      </header>
+      <section class="bg-green-100 py-5 px-2">
+         <input id="searchBar" type="text" class="my-4 w-full h-10 bg-white rounded-lg shadow-md outline-none px-3" autocomplete="off" />
+         <div id="global" class="mx-auto grid grid-cols-2 grid-flow-row-dense gap-2">
+            <template>
+               <div class="col-span-2 bg-white rounded-xl shadow-md px-3 pt-6 pb-2 gap-y-10 text-xl">
+                  <div class="my-3 flex justify-between">
+                     <div class="w-1/2 font-semibold">
+                        <h2 class="text-lg">الفاتحة</h2>
+                        <h2 class="text-lg">(El Fatiah)</h2>
+                     </div>
+                     <div class="w-1/2 flex flex-col items-end justify-end px-2 gap-x-2 content-start">
+                        <div>
+                           <span>إعادة</span>
+                           <label class="toggle-switch mt-1">
+                              <input id="repeat" type="checkbox" />
+                              <div class="toggle-switch-background">
+                                 <div class="toggle-switch-handle"></div>
+                              </div>
+                           </label>
+                        </div>
+                        <div>
+                           <span>مواصلة</span>
+                           <label class="toggle-switch mt-1">
+                              <input id="repeat" type="checkbox" />
+                              <div class="toggle-switch-background">
+                                 <div class="toggle-switch-handle"></div>
+                              </div>
+                           </label>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="my-4 px-4 flex items-center justify-center gap-x-3 text-[16px]">
+                     <span id="">0.2</span>
+                     <input id="lec" type="range" name="" class="time-bar" />
+                     <span>8:00</span>
+                  </div>
+                  <div class="flex gap-4 justify-center">
+                     <button id="back" class="w-8 h-8 bg-green-600 text-white rounded-full text-[16px] flex justify-center items-center"><i class="fa fa-step-forward"></i></button>
+                     <button id="play" class="w-8 h-8 bg-green-600 text-white rounded-full text-[16px] flex justify-center items-center">
+                        <i class="fa fa-play rot"></i>
+                     </button>
+                     <button id="fwd" class="w-8 h-8 bg-green-600 text-white rounded-full text-[16px] flex justify-center items-center"><i class="fa fa-step-backward"></i></button>
+                     <button id="stop" class="w-8 h-8 bg-green-600 text-white rounded-full text-[16px] flex justify-center items-center"><i class="fa fa-stop"></i></button>
+                     <button id="tele" class="w-8 h-8 text-white rounded-full text-[16px] flex justify-center items-center relative bg-green-200 overflow-hidden">
+                        <span class="down-prog absolute bottom-0 right-0 bg-green-600 h-10 w-10 rounded-none"> </span>
+                        <span class="absolute text-[10px] text-black">20%</span>
+                        <i class="fa-solid fa-download"></i>
+                     </button>
+                  </div>
+                  <div>
+                     <p id="errMessage" class="errMsg text-center text-red-600 text-[16px] my-3">لا يمكن الاتصال بانترنت</p>
+                  </div>
+                  <div class="my-4 tag-list w-full relative">
+                     <!-- <button class="absolute left-arr text-lg text-green-500 px-2">
+                     <i class="fa-solid fa-arrow-right"></i>
+                  </button> -->
+                     <!-- <div class="inner flex gap-3 px-2 w-11/12 mx-auto overflow-hidden"> -->
+                     <!-- <div class="w-full overflow-hidden flex justify-center"> -->
+                     <div class="w-full flex justify-center">
+                        <!-- <ul class="mx-auto w-full flex flex-wrap gap-x-4 px-2 text-sm text-white py-3"> -->
+                        <ul class="track flex mx-auto w-full gap-x-2 px-2 text-sm text-white py-3">
+                           <li class="tracks bg-gradient-to-t from-green-900 to-green-700 w-[100px] px-2 rounded-full overflow-hidden text-ellipsis whitespace-pre"></li>
+                           <li class="tracks bg-gradient-to-t from-green-600 to-green-400 w-[100px] px-2 rounded-full overflow-hidden text-ellipsis whitespace-pre"></li>
+                           <li class="tracks bg-gradient-to-t from-green-600 to-green-400 w-[100px] px-2 rounded-full overflow-hidden text-ellipsis whitespace-pre"></li>
+                           <li class="tracks bg-gradient-to-t from-green-600 to-green-400 w-[100px] px-2 rounded-full overflow-hidden text-ellipsis whitespace-pre"></li>
+                           <li class="tracks bg-gradient-to-t from-green-600 to-green-400 w-[100px] px-2 rounded-full overflow-hidden text-ellipsis whitespace-pre"></li>
+                           <li class="tracks bg-gradient-to-t from-green-600 to-green-400 w-[100px] px-2 rounded-full overflow-hidden text-ellipsis whitespace-pre">khaled444565455</li>
+                           <li class="tracks bg-gradient-to-t from-green-600 to-green-400 w-[100px] px-2 rounded-full overflow-hidden text-ellipsis whitespace-pre">khaled444565455</li>
+                        </ul>
+                     </div>
+                     <!-- <button class="absolute right-arr text-lg text-green-500 px-2"><i class="fa-solid fa-arrow-left"></i></button> -->
+                  </div>
+               </div>
+               <div class="bg-white rounded-xl shadow-md px-3 pt-6 pb-2 gap-y-10 text-xl self-start">
+                  <div class="my-3 text-center font-semibold">
+                     <h2 class="text-2xl">الفاتحة</h2>
+                     <h2 class="text-xl">(El Fatiah)</h2>
+                  </div>
+                  <div class="flex justify-between text-lg">
+                     <p>أيات</p>
+                     <p class="font-bold">7</p>
+                     <p>Verses</p>
+                  </div>
+                  <div class="flex justify-between text-lg">
+                     <p>مكية</p>
+                     <p>Makkia</p>
+                  </div>
+                  <div class="my-4 w-full flex justify-center">
+                     <button class="bn632-hover bn25 flex justify-center py-1 px-14 text-xl text-white cursor-pointer select-none">قرائة</button>
+                  </div>
+               </div>
+               <div class="bg-white rounded-xl shadow-md px-3 pt-6 pb-2 gap-y-10 text-xl self-start">
+                  <div class="my-3 text-center font-semibold">
+                     <h2 class="text-2xl">الفاتحة</h2>
+                     <h2 class="text-xl">(El Fatiah)</h2>
+                  </div>
+                  <div class="flex justify-between text-lg">
+                     <p>أيات</p>
+                     <p class="font-bold">7</p>
+                     <p>Verses</p>
+                  </div>
+                  <div class="flex justify-between text-lg">
+                     <p>مكية</p>
+                     <p>Makkia</p>
+                  </div>
+                  <div class="my-4 w-full flex justify-center">
+                     <button class="bn632-hover bn25 flex justify-center py-1 px-14 text-xl text-white cursor-pointer select-none">قرائة</button>
+                  </div>
+               </div>
+               <div class="bg-white rounded-xl shadow-md px-3 pt-6 pb-2 gap-y-10 text-xl self-start">
+                  <div class="my-3 text-center font-semibold">
+                     <h2 class="text-2xl">الفاتحة</h2>
+                     <h2 class="text-xl">(El Fatiah)</h2>
+                  </div>
+                  <div class="flex justify-between text-lg">
+                     <p>أيات</p>
+                     <p class="font-bold">7</p>
+                     <p>Verses</p>
+                  </div>
+                  <div class="flex justify-between text-lg">
+                     <p>مكية</p>
+                     <p>Makkia</p>
+                  </div>
+                  <div class="my-4 w-full flex justify-center">
+                     <button class="bn632-hover bn25 flex justify-center py-1 px-14 text-xl text-white cursor-pointer select-none">قرائة</button>
+                  </div>
+               </div>
+            </template>
+         </div>
+      </section>
+
+      <script src="./js/lecture.js"></script>
+      <script src="./js/srtDisplay.js"></script>
+   </body>
+</html>
+
+<!-- https://www.youtube.com/watch?v=ftjZI4mLCoI -->
+<!-- api 
+https://api-docs.quran.com/docs/quran.com_versioned/chapter-reciter-audio-file -->
