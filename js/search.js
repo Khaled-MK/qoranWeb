@@ -103,7 +103,7 @@ const updateVolume = () => {
 };
 
 const startRecording = () => {
-   // console.log(verses);
+   console.log("recording...");
    mic.classList.add("listening");
    for (let i = resultDiv.children.length - 1; i >= 0; i--) {
       resultDiv.children[i].remove();
