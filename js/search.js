@@ -56,7 +56,7 @@ recognition.addEventListener("result", (event) => {
    let text = document.createTextNode("");
    text = document.createTextNode(transcript);
    trascDiv.append(text);
-   // console.log(verses[1].text_uthmani_simple);
+   console.log(transcript);
    verses.forEach((verse) => {
       const verseSet = new Set(verse.text_uthmani_simple.split(" "));
       const transcSet = new Set(transcript.split(" "));
