@@ -2,7 +2,6 @@ const globDiv = document.getElementById("global");
 const searchBar = document.getElementById("searchBar");
 
 let sourats;
-console.log("tt");
 window.addEventListener("load", async () => {
    const response = await fetch(`https://api.quran.com/api/v4/chapters`, {
       method: "GET",
@@ -17,8 +16,8 @@ window.addEventListener("load", async () => {
 
    srtDisplay(data.chapters);
 
-   let lecBtns = document.querySelectorAll(".btn");
-   lecture(lecBtns);
+   let lecSoura = document.querySelectorAll(".btn");
+   lecture(lecSoura);
 });
 
 searchBar.addEventListener("input", () => {
@@ -46,7 +45,8 @@ function formatTime(seconds) {
 async function lecture(lecBtns) {
    lecBtns.forEach((btn) => {
       btn.addEventListener("click", async () => {
-         let bigDiv = btn.parentElement.parentElement;
+         // console.log(btn.parentElement);
+         let bigDiv = btn.parentElement;
          const lecDiv = document.createElement("div");
          const ctrlDiv = document.createElement("div");
          const backBtn = document.createElement("button");
@@ -80,8 +80,11 @@ async function lecture(lecBtns) {
          const reapDiv = document.createElement("div");
          const reciterDiv = document.createElement("div");
          const reciterUl = document.createElement("ul");
-         const fileName = bigDiv.firstChild.lastChild.textContent; // je sais pas pourquoi
+
+         // console.log(bigDiv.firstChild.firstChild.textContent);
+         const fileName = bigDiv.firstChild.firstChild.textContent; // je sais pas pourquoi
          // let frFileName = bigDiv.firstChild.lastChild.textContent;
+         let titreDiv = bigDiv.firstChild;
 
          const response = await fetch(`https://api.quran.com/api/v4/resources/recitations`, {
             method: "GET",
@@ -133,7 +136,7 @@ async function lecture(lecBtns) {
             li.id = reciters[i].id;
 
             li.append(name);
-            reciterUl.append(li);
+            // reciterUl.append(li);
          }
 
          input.type = "checkbox";
@@ -146,15 +149,16 @@ async function lecture(lecBtns) {
          label.classList.add("toggle-switch", "mt-1");
          suitLabel.classList.add("toggle-switch", "mt-1");
          switchsDiv.classList.add("w-1/2", "flex", "flex-col", "items-end", "justify-end", "px-2", "gap-x-2", "content-start");
-         secDiv.classList.add("my-3", "flex", "justify-between");
+         secDiv.classList.add("my-3", "flex", "justify-between", "secDiv");
+
          bigDiv.classList.add("col-span-2", "gap-y-10");
-         bigDiv.firstChild.classList.remove("text-center", "my-3"); //je sais pas pourquoi
+         bigDiv.firstChild.classList.remove("text-center", "my-3");
          bigDiv.firstChild.classList.add("w-1/2");
 
          lecDiv.classList.add("my-4", "px-4", "flex", "items-center", "justify-center", "gap-x-3", "text-[16px]");
          ctrlDiv.classList.add("flex", "gap-4", "justify-center");
          backBtn.classList.add("controls", "w-8", "h-8", "bg-green-600", "text-white", "text-[16px]", "rounded-full", "flex", "justify-center", "items-center");
-         playBtn.classList.add("controls", "play", "w-8", "h-8", "bg-green-600", "text-white", "text-[16px]", "rounded-full", "flex", "justify-center", "items-center");
+         playBtn.classList.add("controls", "play", "w-8", "h-8", "bg-green-300", "text-white", "text-[16px]", "rounded-full", "flex", "justify-center", "items-center");
          fwdBtn.classList.add("controls", "w-8", "h-8", "bg-green-600", "text-white", "text-[16px]", "rounded-full", "flex", "justify-center", "items-center");
          stopBtn.classList.add("controls", "w-8", "h-8", "bg-green-600", "text-white", "text-[16px]", "rounded-full", "flex", "justify-center", "items-center");
          downBtn.classList.add("controls", "down", "w-8", "h-8", "bg-green-600", "text-white", "text-[16px]", "rounded-full", "flex", "justify-center", "items-center");
@@ -166,6 +170,7 @@ async function lecture(lecBtns) {
          timeBar.classList.add("time-bar");
          reciterDiv.classList.add("inner", "w-full", "overflow-hidden", "flex", "justify-center");
          reciterUl.classList.add("track", "flex", "mx-auto", "w-full", "gap-x-2", "px-2", "text-sm", "text-white", "py-3");
+         audio.classList.add("audio");
 
          timeBar.type = "range";
          timeBar.value = 0;
@@ -177,12 +182,12 @@ async function lecture(lecBtns) {
          suitLabel.append(suitInput, div2);
          suitDiv.append(suitSpan, suitLabel);
          reapDiv.append(reapSan, label);
-         switchsDiv.append(reapDiv, suitDiv);
+
          div.append(ptDiv);
          label.append(input, div);
          reapSan.append(document.createTextNode("إعادة"));
          suitSpan.append(document.createTextNode("مواصلة"));
-         secDiv.append(bigDiv.firstChild, switchsDiv);
+
          bigDiv.prepend(secDiv);
          lecDiv.append(curTimeSpan, timeBar, fullTimeSpan, audio);
          downBtn.append(downi);
@@ -193,11 +198,30 @@ async function lecture(lecBtns) {
          ctrlDiv.append(backBtn, playBtn, fwdBtn, stopBtn, downBtn);
          bigDiv.append(lecDiv, ctrlDiv, reciterDiv);
 
+         bigDiv.children[4].remove();
          bigDiv.children[3].remove();
          bigDiv.children[2].remove();
-         bigDiv.children[1].remove();
 
+         switchsDiv.append(reapDiv, suitDiv);
+         secDiv.append(titreDiv, switchsDiv);
+
+         let urlReq = await fetch(`https://api.quran.com/api/v4/chapter_recitations/5/${bigDiv.id}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+         });
+
+         if (!response.ok) {
+            throw new Error(`Erreur HTTP! Statut : ${response.status}`);
+         }
+
+         const urlData = await urlReq.json();
+         const srcUrl = urlData.audio_file.audio_url;
+
+         audio.src = srcUrl;
+
+         /*
          let avReciters = document.querySelectorAll(".reciter");
+
          await fetch(`https://api.quran.com/api/v4/chapter_recitations/2/${bigDiv.id}`, {
             method: "GET",
             headers: {
@@ -207,7 +231,6 @@ async function lecture(lecBtns) {
             .then((response) => {
                if (!response.ok) {
                   throw new Error(`Erreur HTTP! Statut : ${response.status}`);
-                  throwError(bigDiv);
                }
                return response.json();
             })
@@ -260,9 +283,12 @@ async function lecture(lecBtns) {
                   });
             });
          });
+         */
 
          audio.addEventListener("canplay", () => {
-            playBtn.classList.add("bg-green-600");
+            console.log("can");
+            // playBtn.classList.add("bg-green-600");
+            playBtn.style.cssText = "background-color: rgb(22 163 74 / var(--tw-bg-opacity))";
          });
          backBtn.addEventListener("click", () => {
             audio.currentTime = parseFloat(audio.currentTime) - 10;
@@ -272,27 +298,40 @@ async function lecture(lecBtns) {
          });
 
          playBtn.addEventListener("click", () => {
-            let audios = document.querySelectorAll(".audio");
-            let playsbtn = document.querySelectorAll(".fa-pause");
+            if (playi.classList.contains("fa-play")) {
+               let audios = document.querySelectorAll(".audio");
+               let playsbtn = document.querySelectorAll(".fa-pause");
 
-            for (let i = 0; i < audios.length; i++) {
-               audios[i].pause();
-            }
+               for (let i = 0; i < audios.length; i++) {
+                  audios[i].pause();
+               }
+               for (let i = 0; i < playsbtn.length; i++) {
+                  playsbtn[i].classList.remove("fa-pause");
+                  playsbtn[i].classList.add("fa-play");
+               }
 
-            if (playi.classList.contains("fa-play") || playi.classList.contains("fa-rotate-left")) {
-               playi.classList.add("fa-pause");
                playi.classList.remove("fa-play");
-               playi.classList.remove("fa-rotate-left");
+               playi.classList.add("fa-pause");
                audio.play();
-            } else {
+            } else if (playi.classList.contains("fa-pause")) {
                playi.classList.remove("fa-pause");
-               playi.classList.remove("fa-rotate-left");
                playi.classList.add("fa-play");
                audio.pause();
-            }
-            for (let i = 0; i < playsbtn.length; i++) {
-               playsbtn[i].classList.add("fa-play");
-               playsbtn[i].classList.remove("fa-pause");
+            } else {
+               let audios = document.querySelectorAll(".audio");
+               let playsbtn = document.querySelectorAll(".fa-pause");
+
+               for (let i = 0; i < audios.length; i++) {
+                  audios[i].pause();
+               }
+               for (let i = 0; i < playsbtn.length; i++) {
+                  playsbtn[i].classList.remove("fa-pause");
+                  playsbtn[i].classList.add("fa-play");
+               }
+
+               playi.classList.remove("fa-play");
+               playi.classList.add("fa-pause");
+               audio.play();
             }
          });
 

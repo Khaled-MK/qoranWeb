@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <title>Qoran App</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap" rel="stylesheet" />
+
+      <link rel="stylesheet" href="./css/master.css" />
+   </head>
+   <body class="flex flex-col h-full">
+      <header class="w-full h-28 flex justify-center items-center z-10 gree relative">
+         <h1 class="text-white text-5xl font-bold">LOGO</h1>
+         <div id="searchProg" class="absolute bottom-0 right-0 bg-blue-500 h-1 prog"></div>
+      </header>
+      <section class="bg-green-100 py-5 px-2 flex-1 flex flex-col">
+         <!-- <input id="searchBar" type="text" class="my-4 w-full h-10 bg-white rounded-lg shadow-md outline-none px-3" autocomplete="off" /> -->
+         <div id="global" class="mx-auto w-full flex-1 flex items-center justify-between flex-col pb-20">
+            <div class="w-full">
+               <!-- <div id="" class="w-full text-center text-sm">
+                  <label for="acceptTaux" class="block my-2">% Acceptation </label>
+                  <div class="flex items-center gap-x-2">
+                     <input type="range" name="" id="acceptTaux" class="flex-1" />
+                     <span id="pource">96%</span>
+                  </div>
+               </div> -->
+               <div id="transc" class="w-full text-center text-3xl font-uthmani"></div>
+               <div id="compteur" class="w-full text-[11px] font-uthmani flex justify-end"></div>
+
+               <div id="results" class="my-4 py-4 grid grid-cols-1 gap-y-2 overflow-y-scroll text-ellipsis text-lg whitespace-pre overflow-x-hidden">
+                  <template>
+                     <div class="flex justify-between items-center gap-x-1 bg-white rounded-full px-2 shadow-md cursor-pointer select-none">
+                        <p class="overflow-hidden text-ellipsis whitespace-pre h-10 quran-font flex items-center">ذلك الكتاب لا ريب</p>
+                        <p class="messiri-font text-sm para flex items-center">ٱلۡعَٰلَمِينَ <span>25</span></p>
+                     </div>
+
+                     <div class="flex justify-between items-center gap-x-1 bg-white rounded-full px-2 shadow-md cursor-pointer select-none">
+                        <p class="overflow-hidden text-ellipsis whitespace-pre h-10">ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ لۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ لۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ لۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ</p>
+                        <p class="messiri-font text-sm">ٱلۡعَٰلَمِينَ <span>25</span></p>
+                     </div>
+                  </template>
+               </div>
+               <template>
+                  <div class="my-4 py-4 px-2 flex flex-wrap gap-y-2 overflow-y-scroll justify-center text-lg bg-white rounded-lg shadow-lg">
+                     <h2 class="mb-4 w-full text-center text-2xl">نَعۡبُدُ</h2>
+                     <!-- <p class="">ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</p>
+                     <span class="mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center">286</span> -->
+
+                     <p class="verse">الٓمٓ</p>
+                     <span class="mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center"> 1 </span>
+                     <p class="verse">ذَٰلِكَ ٱلْكِتَـٰبُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ</p>
+                     <span class="mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center"> 2 </span>
+
+                     <p class="verse">وَٱلَّذِينَ يُؤْمِنُونَ بِمَآ أُنزِلَ إِلَيْكَ وَمَآ أُنزِلَ مِن قَبْلِكَ وَبِٱلْـَٔاخِرَةِ هُمْ يُوقِنُونَ</p>
+                     <span class="mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center"> 4 </span>
+                     <p class="verse">أُو۟لَـٰٓئِكَ عَلَىٰ هُدًى مِّن رَّبِّهِمْ ۖ وَأُو۟لَـٰٓئِكَ هُمُ ٱلْمُفْلِحُونَ إِنَّ ٱلَّذِينَ كَفَرُوا۟ سَوَآءٌ عَلَيْهِمْ ءَ أَنذَرْتَهُمْ أَمْ لَمْ تُنذِرْهُمْ لَا يُؤْمِنُونَ</p>
+                     <span class="mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center">5</span>
+                     <p class="verse">خَتَمَ ٱللَّهُ عَلَىٰ قُلُوبِهِمْ وَعَلَىٰ سَمْعِهِمْ ۖ وَعَلَىٰٓ أَبْصَـٰرِهِمْ غِشَـٰوَةٌ ۖ وَلَهُمْ عَذَابٌ عَظِيمٌ</p>
+                     <span class="mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center">6</span>
+                     <p class="verse">وَمِنَ ٱلنَّاسِ مَن يَقُولُ ءَامَنَّا بِٱللَّهِ وَبِٱلْيَوْمِ ٱلْـَٔاخِرِ وَمَا هُم بِمُؤْمِنِينَ يُخَـٰدِعُونَ ٱللَّهَ وَٱلَّذِينَ ءَامَنُوا۟ وَمَا يَخْدَعُونَ إِلَّآ أَنفُسَهُمْ وَمَا يَشْعُرُونَ</p>
+                     <span class="mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center"> 8 </span>
+                     <p class="verse">فِى قُلُوبِهِم مَّرَضٌ فَزَادَهُمُ ٱللَّهُ مَرَضًا ۖ وَلَهُمْ عَذَابٌ أَلِيمٌۢ بِمَا كَانُوا۟ يَكْذِبُونَ</p>
+                     <span class="mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center"> 10 </span>
+                     <p class="verse">
+                        وَإِذَا قِيلَ لَهُمْ لَا تُفْسِدُوا۟ فِى ٱلْأَرْضِ قَالُوٓا۟ إِنَّمَا نَحْنُ مُصْلِحُونَ أَلَآ إِنَّهُمْ هُمُ ٱلْمُفْسِدُونَ وَلَـٰكِن لَّا يَشْعُرُونَ 12 وَإِذَا قِيلَ لَهُمْ ءَامِنُوا۟ كَمَآ ءَامَنَ ٱلنَّاسُ قَالُوٓا۟ أَنُؤْمِنُ كَمَآ ءَامَنَ ٱلسُّفَهَآءُ ۗ أَلَآ إِنَّهُمْ هُمُ ٱلسُّفَهَآءُ وَلَـٰكِن لَّا يَعْلَمُونَ 13 وَإِذَا لَقُوا۟ ٱلَّذِينَ ءَامَنُوا۟ قَالُوٓا۟ ءَامَنَّا وَإِذَا خَلَوْا۟ إِلَىٰ شَيَـٰطِينِهِمْ قَالُوٓا۟ إِنَّا مَعَكُمْ إِنَّمَا نَحْنُ
+                     </p>
+                     <span class="para mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center"> 11 </span>
+                     <p class="verse">
+                        مُسْتَهْزِءُونَ 14 ٱللَّهُ يَسْتَهْزِئُ بِهِمْ وَيَمُدُّهُمْ فِى طُغْيَـٰنِهِمْ يَعْمَهُونَ 15 أُو۟لَـٰٓئِكَ ٱلَّذِينَ ٱشْتَرَوُا۟ ٱلضَّلَـٰلَةَ بِٱلْهُدَىٰ فَمَا رَبِحَت تِّجَـٰرَتُهُمْ وَمَا كَانُوا۟ مُهْتَدِينَ 16 مَثَلُهُمْ كَمَثَلِ ٱلَّذِى ٱسْتَوْقَدَ نَارًا فَلَمَّآ أَضَآءَتْ مَا حَوْلَهُۥ ذَهَبَ ٱللَّهُ بِنُورِهِمْ وَتَرَكَهُمْ فِى ظُلُمَـٰتٍ لَّا يُبْصِرُونَ 17 صُمٌّۢ بُكْمٌ عُمْىٌ فَهُمْ لَا يَرْجِعُونَ 18 أَوْ كَصَيِّبٍ مِّنَ ٱلسَّمَآءِ فِيهِ ظُلُمَـٰتٌ
+                        وَرَعْدٌ
+                     </p>
+                     <span class="mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center">20</span>
+                     <p class="verse">
+                        وَبَرْقٌ يَجْعَلُونَ أَصَـٰبِعَهُمْ فِىٓ ءَاذَانِهِم مِّنَ ٱلصَّوَٰعِقِ حَذَرَ ٱلْمَوْتِ ۚ وَٱللَّهُ مُحِيطٌۢ بِٱلْكَـٰفِرِينَ 19 يَكَادُ ٱلْبَرْقُ يَخْطَفُ أَبْصَـٰرَهُمْ ۖ كُلَّمَآ أَضَآءَ لَهُم مَّشَوْا۟ فِيهِ وَإِذَآ أَظْلَمَ عَلَيْهِمْ قَامُوا۟ ۚ وَلَوْ شَآءَ ٱللَّهُ لَذَهَبَ بِسَمْعِهِمْ وَأَبْصَـٰرِهِمْ ۚ إِنَّ ٱللَّهَ عَلَىٰ كُلِّ شَىْءٍ قَدِيرٌ 20 يَـٰٓأَيُّهَا ٱلنَّاسُ ٱعْبُدُوا۟ رَبَّكُمُ ٱلَّذِى خَلَقَكُمْ وَٱلَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ
+                        21 ٱلَّذِى جَعَلَ لَكُمُ ٱلْأَرْضَ فِرَٰشًا وَٱلسَّمَآءَ بِنَآءً وَأَنزَلَ مِنَ ٱلسَّمَآءِ مَآءً فَأَخْرَجَ بِهِۦ مِنَ ٱلثَّمَرَٰتِ رِزْقًا لَّكُمْ ۖ فَلَا تَجْعَلُوا۟ لِلَّهِ أَندَادًا وَأَنتُمْ تَعْلَمُونَ 22 وَإِن كُنتُمْ فِى رَيْبٍ مِّمَّا نَزَّلْنَا عَلَىٰ عَبْدِنَا فَأْتُوا۟ بِسُورَةٍ مِّن مِّثْلِهِۦ وَٱدْعُوا۟ شُهَدَآءَكُم مِّن دُونِ ٱللَّهِ إِن كُنتُمْ صَـٰدِقِينَ 23 فَإِن لَّمْ تَفْعَلُوا۟ وَلَن تَفْعَلُوا۟ فَٱتَّقُوا۟ ٱلنَّارَ ٱلَّتِى وَقُودُهَا ٱلنَّاسُ
+                        وَٱلْحِجَارَةُ ۖ أُعِدَّتْ لِلْكَـٰفِرِينَ 24 وَبَشِّرِ ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّـٰلِحَـٰتِ أَنَّ لَهُمْ جَنَّـٰتٍ تَجْرِى مِن تَحْتِهَا ٱلْأَنْهَـٰرُ ۖ كُلَّمَا رُزِقُوا۟ مِنْهَا مِن ثَمَرَةٍ رِّزْقًا ۙ قَالُوا۟ هَـٰذَا ٱلَّذِى رُزِقْنَا مِن قَبْلُ ۖ وَأُتُوا۟ بِهِۦ مُتَشَـٰبِهًا ۖ وَلَهُمْ فِيهَآ أَزْوَٰجٌ مُّطَهَّرَةٌ ۖ وَهُمْ فِيهَا خَـٰلِدُونَ 25 ۞ إِنَّ ٱللَّهَ لَا يَسْتَحْىِۦٓ أَن يَضْرِ
+                     </p>
+                     <span class="mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center">21</span>
+                  </div>
+               </template>
+               <template>
+                  <div class="uus mt-4 mb-16 py-4 px-2 flex flex-wrap gap-y-2 overflow-y-scroll justify-center text-lg bg-white rounded-lg shadow-lg">
+                     <p>Lorem, ipsum dolor sit amet consectetur</p>
+                     <span class="mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center"> 1 </span>
+                     <p class="bg-yellow-50 inline">
+                        Lorem, ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias exercitationem autem in quisquam suscipit, deleniti placeat minus commodi laudantium voluptas. Deleniti nisi eos dolorum earum veniam voluptas repellat atque ipsssam?
+                        <span class="inline-block mx-2 w-6 h-6 text-[10px] rounded-full border-[1px] font-semibold border-gray-800"> <span class="w-full h-full flex justify-center items-center">286 </span> </span>
+                        <!-- <span>4448</span> -->
+                     </p>
+
+                     <article>
+                        Lorem, ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias exercitationem autem in quisquam suscipit, deleniti placeat minus commodi laudantium voluptas. Deleniti nisi eos dolorum earum veniam voluptas repellat atque ipsam?
+                        <span class="mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center"> 22 </span>
+                     </article>
+
+                     <!-- <span class="mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center"> 2 </span> -->
+                     <p class="text-center inline">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid dolorum laborum, perspiciatis et ratione modi reprehenderit voluptatem adipisci, excepturi odio, porro illum quo quae at corporis veritatis maxime? Quasi, itaque.</p>
+                     <span class="mt-1 mx-2 w-7 h-7 text-sm rounded-full border-[1px] border-gray-600 flex justify-center"> 3 </span>
+                  </div>
+               </template>
+
+               <div class="w-full mx-auto bg-white rounded-xl shadow-md px-3 py-2 gap-y-2 text-xl">
+                  <div class="flex justify-between">
+                     <div class="w-1/2 font-semibold">
+                        <h2 class="text-lg">الفاتحة</h2>
+                        <h2 class="text-lg">(El Fatiah)</h2>
+                     </div>
+                     <div class="w-1/2 flex flex-col items-end justify-end px-2 content-start">
+                        <div>
+                           <span>إعادة</span>
+                           <label class="toggle-switch mt-2">
+                              <input id="repeat" type="checkbox" />
+                              <div class="toggle-switch-background">
+                                 <div class="toggle-switch-handle"></div>
+                              </div>
+                           </label>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="my-2 px-4 flex items-center justify-center gap-x-3 text-[16px]">
+                     <span id="">0.2</span>
+                     <input id="lec" type="range" name="" class="time-bar" />
+                     <span>8:00</span>
+                  </div>
+                  <div class="flex gap-4 justify-center">
+                     <button id="back" class="w-8 h-8 bg-green-600 text-white rounded-full text-[16px] flex justify-center items-center"><i class="fa fa-step-forward"></i></button>
+                     <button id="play" class="w-8 h-8 bg-green-600 text-white rounded-full text-[16px] flex justify-center items-center">
+                        <i class="fa fa-play rot"></i>
+                     </button>
+                     <button id="fwd" class="w-8 h-8 bg-green-600 text-white rounded-full text-[16px] flex justify-center items-center"><i class="fa fa-step-backward"></i></button>
+                     <button id="stop" class="w-8 h-8 bg-green-600 text-white rounded-full text-[16px] flex justify-center items-center"><i class="fa fa-stop"></i></button>
+                     <button id="tele" class="w-8 h-8 text-white rounded-full text-[16px] flex justify-center items-center relative bg-green-200 overflow-hidden">
+                        <span class="down-prog absolute bottom-0 right-0 bg-green-600 h-10 w-10 rounded-none"> </span>
+                        <span class="absolute text-[10px] text-black">20%</span>
+                        <i class="fa-solid fa-download"></i>
+                     </button>
+                  </div>
+                  <div>
+                     <p id="errMessage" class="errMsg text-center text-red-600 text-[16px] my-3">لا يمكن الاتصال بانترنت</p>
+                  </div>
+                  <div class="my-4 tag-list w-full relative">
+                     <div class="w-full flex justify-center">
+                        <ul class="track flex mx-auto w-full gap-x-2 px-2 text-sm text-white py-3">
+                           <li class="tracks bg-gradient-to-t from-green-900 to-green-700 w-[100px] px-2 rounded-full overflow-hidden text-ellipsis whitespace-pre"></li>
+                           <li class="tracks bg-gradient-to-t from-green-600 to-green-400 w-[100px] px-2 rounded-full overflow-hidden text-ellipsis whitespace-pre"></li>
+                           <li class="tracks bg-gradient-to-t from-green-600 to-green-400 w-[100px] px-2 rounded-full overflow-hidden text-ellipsis whitespace-pre"></li>
+                           <li class="tracks bg-gradient-to-t from-green-600 to-green-400 w-[100px] px-2 rounded-full overflow-hidden text-ellipsis whitespace-pre"></li>
+                           <li class="tracks bg-gradient-to-t from-green-600 to-green-400 w-[100px] px-2 rounded-full overflow-hidden text-ellipsis whitespace-pre"></li>
+                           <li class="tracks bg-gradient-to-t from-green-600 to-green-400 w-[100px] px-2 rounded-full overflow-hidden text-ellipsis whitespace-pre">khaled444565455</li>
+                           <li class="tracks bg-gradient-to-t from-green-600 to-green-400 w-[100px] px-2 rounded-full overflow-hidden text-ellipsis whitespace-pre">khaled444565455</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <button type="button" class="fixed bottom-16 mic flex items-center justify-center w-20 h-20 bg-teal-600 text-white text-4xl rounded-full cursor-pointer">
+               <i class="fa-solid fa-microphone z-10"></i>
+            </button>
+         </div>
+      </section>
+      <footer class="fixed bottom-0 gree h-10 w-full z-20"></footer>
+      <script src="./js/search.js"></script>
+   </body>
+</html>
+
+<!-- https://www.youtube.com/watch?v=ftjZI4mLCoI -->
+<!-- api 
+https://api-docs.quran.com/docs/quran.com_versioned/chapter-reciter-audio-file -->
