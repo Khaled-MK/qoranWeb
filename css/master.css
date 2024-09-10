@@ -994,6 +994,11 @@ video {
   padding-right: 1rem;
 }
 
+.px-9 {
+  padding-left: 2.25rem;
+  padding-right: 2.25rem;
+}
+
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
@@ -1039,16 +1044,12 @@ video {
   padding-top: 0.5rem;
 }
 
-.pt-6 {
-  padding-top: 1.5rem;
-}
-
-.pb-3 {
-  padding-bottom: 0.75rem;
-}
-
 .pt-4 {
   padding-top: 1rem;
+}
+
+.pt-6 {
+  padding-top: 1.5rem;
 }
 
 .text-center {
@@ -1371,4 +1372,71 @@ footer {
 
 .rot {
   transform: scaleX(-1);
+}
+
+/* .waveBtn {
+   border: none;
+   color: #fff;
+   padding: 1.25rem 2.25rem;
+   border-radius: 50px;
+   position: relative;
+   overflow: hidden;
+} */
+
+.wave {
+  background-color: #0369a1;
+  color: #fff;
+  width: 100%;
+  height: 5rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  box-shadow: inset 5px -5px 22px #075985, inset -5px;
+}
+
+.wave::after,
+.wave::before {
+  content: "";
+  position: absolute;
+  left: -6.875rem;
+  top: -19.75rem;
+  border-radius: 40%;
+  animation: btnAnim 10s linear infinite;
+  transition: 0.5s ease-in-out;
+}
+
+.wave::after {
+  width: 250%;
+  height: 25rem;
+  background: #002f49;
+  animation-delay: 2s;
+}
+
+.wave::before {
+  width: 20.125rem;
+  height: 25rem;
+  background-color: rgb(24, 126, 210);
+  animation-delay: 3s;
+}
+
+.waveText {
+  position: relative;
+  /* font-size: 1.375rem; */
+  /* letter-spacing: 0.125rem; */
+}
+
+.waveBtn:hover .wave::after,
+.waveBtn:hover .wave::before {
+  width: 200%;
+  height: 400%;
+}
+
+@keyframes btnAnim {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }

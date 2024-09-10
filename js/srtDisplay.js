@@ -15,6 +15,8 @@ function srtDisplay(data) {
       const arPlacePara = document.createElement("p");
       const frPlacePara = document.createElement("p");
       const lecBtn = document.createElement("button");
+      const waveSpan = document.createElement("span");
+      const textSpan = document.createElement("span");
       const arNom = document.createTextNode(soura.name_arabic);
       const frNom = document.createTextNode(soura.name_simple);
       const frVerses = document.createTextNode(`Verses`);
@@ -27,9 +29,15 @@ function srtDisplay(data) {
       frH.classList.add("frTitre", "text-xl");
       versesDiv.classList.add("flex", "justify-between", "text-lg");
       placeDiv.classList.add("flex", "justify-between", "text-lg");
-      btnDiv.classList.add("btn", "my-3", "w-full", "flex", "justify-center", "bg-green-600", "rounded-full");
-      lecBtn.classList.add("bn632-hover", "bn25", "flex", "justify-center", "py-1", "px-14", "text-xl", "text-white", "cursor-pointer", "select-none");
+      // btnDiv.classList.add("btn", "my-3", "w-full", "flex", "justify-center", "bg-green-600", "rounded-full");
+      btnDiv.classList.add("btn", "flex", "justify-center", "my-2");
+      // lecBtn.classList.add("bn632-hover", "bn25", "flex", "justify-center", "py-1", "px-14", "text-xl", "text-white", "cursor-pointer", "select-none");
+      lecBtn.classList.add("waveBtn", "relative", "rounded-full", "px-9", "flex", "text-white", "overflow-hidden", "font-uthmani");
+      waveSpan.classList.add("wave");
+      textSpan.classList.add("waveText", "text-xl");
       vPara.classList.add("font-bold");
+
+      textSpan.append(document.createTextNode("قراءة"));
 
       arH.append(arNom);
       frH.append(frNom);
@@ -48,8 +56,7 @@ function srtDisplay(data) {
          frPlacePara.append(document.createTextNode(`intouvable`));
       }
 
-      lecBtn.append(document.createTextNode("قراءة"));
-
+      lecBtn.append(waveSpan, textSpan);
       btnDiv.append(lecBtn);
       placeDiv.append(arPlacePara, frPlacePara);
       versesDiv.append(vArPara, vPara, vFrPara);

@@ -286,8 +286,10 @@ async function lecture(lecBtns) {
          */
 
          audio.addEventListener("canplay", () => {
-            console.log("can");
-            // playBtn.classList.add("bg-green-600");
+            console.log(formatTime(audio.duration));
+            // fullTimeSpan.append(document.createTextNode(formatTime(audio.duration)));
+            fullTimeSpan.textContent = formatTime(audio.duration);
+
             playBtn.style.cssText = "background-color: rgb(22 163 74 / var(--tw-bg-opacity))";
          });
          backBtn.addEventListener("click", () => {
